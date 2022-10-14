@@ -56,7 +56,7 @@ def WriteOutput(dict, domain_name):
     for key in dict.keys():
         if not dict[key].abandoned and not dict[key].hostname == None:
             print('local-data: "{0}.{2}. IN A {1}"'.format(dict[key].hostname, key, domain_name))
-            print('local-data-ptr: {0} {1}.{2}"'.format(key, dict[key].hostname, domain_name))
+            print('local-data-ptr: "{0} {1}.{2}"'.format(key, dict[key].hostname, domain_name))
             print('')
 
 
