@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/local/bin/python3
 
 import re
 import argparse
@@ -53,6 +53,10 @@ def ParseFile(filename):
 
 
 def WriteOutput(dict, domain_name):
+    print("# DNS A records for active DHCP (dhcpd) leases")
+    print("#")
+    print("# File created using dhcpd_to_unbound (https://github.com/bceverly/dhcpd_to_unbound)")
+    print("")
     for key in dict.keys():
         if not dict[key].abandoned and not dict[key].hostname == None:
             print('local-data: "{0}.{2}. IN A {1}"'.format(dict[key].hostname, key, domain_name))
