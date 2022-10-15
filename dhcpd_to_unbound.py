@@ -82,7 +82,7 @@ def write_output(leases, domain_name):
     domain_name - the domain name (ex. example.org) that is to be appended
         to the hostnames supplied by the parse_file in the dictionary
     """
-    print('# DNS A records for active DHCP (dhcp) leases\n'
+    print('# DNS A records for active DHCP (dhcpd) leases\n'
           '#\n'
           '# File created using dhcp_to_unbound '
           '(https://github.com/bceverly/dhcp_to_unbound)\n')
