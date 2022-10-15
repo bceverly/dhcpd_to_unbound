@@ -1,9 +1,22 @@
 #! /usr/local/bin/python3
+"""
+    dhcpd_to_unbound
+
+    A tool that helps integrate dhcpd to unbound by parsing the leases
+    file from dhcpd (normally in /var/db/dhcpd.leases) and converts it
+    to a series of blank-line separated A records using a domain name
+    specified on the command-line:
+
+    dhcpd_to_unbound --input /var/db/dhcpd.leases --domain example.com
+"""
 
 import re
 import argparse
 
 class Lease:
+""" 
+    A class to manage the contents of a dhcpd lease record 
+"""
     hostname = None
     mac_address = None
     abandoned = None
@@ -15,6 +28,16 @@ class Lease:
 
 
 def ParseFile(filename):
+"""
+    A function to parse the dhcpd.leases file
+
+    Arguments:
+    filename - the filename of the dhcpd.leases file (full path)
+
+    Returns:
+    A dictionary of Lease objects with the string of the ipv4 address
+    as the key
+"""
     file = open(filename, 'r')
     Lines = file.readlines()
 
@@ -53,6 +76,16 @@ def ParseFile(filename):
 
 
 def WriteOutput(dict, domain_name):
+"""
+    Write out a list of blank line separated A records in a format used
+    by unbound from the list of lease objects
+
+    Arguments:
+    dict - the dictionary of Lease objects produced by the Parse function
+        above
+    domain-name - the domain name (ex. example.org) that is to be appended
+        to the hostnames supplied by the Parse function in the dictionary
+"""
     print("# DNS A records for active DHCP (dhcpd) leases")
     print("#")
     print("# File created using dhcpd_to_unbound (https://github.com/bceverly/dhcpd_to_unbound)")
