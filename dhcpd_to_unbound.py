@@ -87,7 +87,7 @@ def write_output(leases, domain_name):
           '# File created using dhcp_to_unbound '
           '(https://github.com/bceverly/dhcp_to_unbound)\n')
 
-    for key, value in dict.items():
+    for key, value in leases.items():
         if not (value.abandoned or value.hostname is None):
             print(f'local-data: "{value.hostname}.{domain_name}. IN A {key}"\n'
                   f'local-data-ptr: "{key} {value.hostname}.{domain_name}"\n')
