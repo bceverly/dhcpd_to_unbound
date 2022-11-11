@@ -44,7 +44,7 @@ def parse_file(filename):
 
     with open(filename) as fp:
         for line in fp:
-            words = line.split(' ')
+            words = line.strip().split(' ')
 
             if line.startswith('lease'):
                 if current_ip is not None and current_ip not in leases:
