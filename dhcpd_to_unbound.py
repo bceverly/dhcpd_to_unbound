@@ -44,7 +44,7 @@ def parse_file(filename):
 
     with open(filename) as fp:
         for line in fp:
-            words = line.split(' ')
+            words = line.strip().split(' ')
 
             if line.startswith('lease'):
                 if current_ip is not None and current_ip not in leases:
@@ -85,12 +85,13 @@ def write_output(leases, domain_name):
     print('# DNS A records for active DHCP (dhcpd) leases\n'
           '#\n'
           '# File created using dhcp_to_unbound '
-          '(https://github.com/bceverly/dhcp_to_unbound)\n')
+          '(https://github.com/bceverly/dhcp_to_unbound)\n'
+          'server:\n')
 
     for key, value in leases.items():
         if not (value.abandoned or value.hostname is None):
-            print(f'local-data: "{value.hostname}.{domain_name}. IN A {key}"\n'
-                  f'local-data-ptr: "{key} {value.hostname}.{domain_name}"\n')
+            print(f'  local-data: "{value.hostname}.{domain_name}. IN A {key}"\n'
+                  f'  local-data-ptr: "{key} {value.hostname}.{domain_name}"\n')
 
 
 if __name__ == '__main__':
